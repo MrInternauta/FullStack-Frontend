@@ -2,9 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
+import { AppState, setUser, unUser } from '@advanced-front/core';
 import { environment } from '../../../environments/environment';
 import { Usuario } from '../../core/models/usuario.model';
 import { SubirarhivoService } from '../subirarchivo/subirarhivo.service';
@@ -17,7 +19,12 @@ export class UsuarioService {
   token!: string;
   public Swal = Swal;
 
-  constructor(public http: HttpClient, public router: Router, public subirarchivo: SubirarhivoService) {
+  constructor(
+    public http: HttpClient,
+    public router: Router,
+    public subirarchivo: SubirarhivoService,
+    private store: Store<AppState>
+  ) {
     this.CargarStorage();
     console.log(environment.url);
   }
@@ -68,13 +75,15 @@ export class UsuarioService {
     if (localStorage.getItem('token')) {
       this.token = localStorage.getItem('token') || '';
       this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
+      this.store.dispatch(setUser({ user: this.usuario, id: this.usuario.id, token: this.token }));
     } else {
       this.token = '';
       this.usuario = null;
     }
   }
 
-  GuardarStorage(id: string, token: string, usuario: any) {
+  GuardarStorage(id: string, token: string, usuario: Usuario) {
+    this.store.dispatch(setUser({ user: usuario, id, token }));
     localStorage.setItem('id', id);
     localStorage.setItem('token', token);
     localStorage.setItem('usuario', JSON.stringify(usuario));
@@ -91,6 +100,7 @@ export class UsuarioService {
     localStorage.removeItem('token');
     localStorage.removeItem('usuario');
     localStorage.removeItem('id');
+    this.store.dispatch(unUser());
     location.reload();
   }
   Login(usuario: Usuario, recordar = false) {
