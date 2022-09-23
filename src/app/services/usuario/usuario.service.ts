@@ -15,7 +15,7 @@ import { SubirarhivoService } from '../subirarchivo/subirarhivo.service';
   providedIn: 'root',
 })
 export class UsuarioService {
-  usuario: any;
+  usuario!: any;
   token!: string;
   public Swal = Swal;
 
@@ -75,7 +75,10 @@ export class UsuarioService {
     if (localStorage.getItem('token')) {
       this.token = localStorage.getItem('token') || '';
       this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
-      this.store.dispatch(setUser({ user: this.usuario, id: this.usuario.id, token: this.token }));
+      if (!this.usuario) {
+        return;
+      }
+      this.store.dispatch(setUser({ user: this.usuario, id: this.usuario.id || '', token: this.token }));
     } else {
       this.token = '';
       this.usuario = null;
@@ -128,7 +131,7 @@ export class UsuarioService {
 
   RegistrarUsuario(usuario: Usuario) {
     usuario.createdAt = new Date();
-    usuario.idRol = null;
+    usuario.idRol = 2;
     return this.http.post(environment.url + 'users/registerAccount', usuario).pipe(
       map(
         (data: any) => {
@@ -148,7 +151,9 @@ export class UsuarioService {
       Authorization: 'Bearer ' + this.token,
     };
     console.log(headers, usuario);
-
+    if (!this.usuario) {
+      return;
+    }
     return this.http
       .put(
         environment.url + 'users/' + this.usuario.id,

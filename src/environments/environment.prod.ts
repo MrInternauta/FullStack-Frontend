@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  url: 'https://rest-api-spring1.herokuapp.com/api/',
+  url: 'http://fullstack-env.eba-swb55srg.us-west-1.elasticbeanstalk.com/api/',
+  apiKey: '',
 };

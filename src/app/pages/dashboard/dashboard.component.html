@@ -1,17 +1,17 @@
 <div class="row el-element-overlay">
-  <div class="col h-100">
-    <div class="card">
+  <div class="col d-flex align-items-stretch animated fadeIn slow">
+    <div class="card col">
       <div class="card-body">
         <h4 class="card-title">Paises disponibles</h4>
         <div class="mailbox">
           <div
             class="message-center contact-widget message-body position-relative ps-container ps-theme-default ps-active-y">
-            <a href="javascript:void(0)" class="message-item d-flex align-items-center border-bottom p-3"
+            <a href="javascript:void(0)" class="message-item d-flex align-items-center border-bottom "
               *ngFor="let pais of paises" (click)="select_country(pais)">
               <span class="user-img position-relative d-inline-block"> <img [src]="pais.bandera" alt="user"
                   class="w-100"> <span class=" rounded-circle online"></span>
               </span>
-              <div class="w-75 d-inline-block v-middle ps-3">
+              <div class="w-75 d-inline-block v-middle ">
                 <h5 class="message-title mb-0 mt-1">{{pais.nombre}}</h5>
               </div>
             </a>
@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div class="col-4 animated fadeIn slow" *ngIf="paisSelected">
+  <div class="col-4  d-flex align-items-stretch animated fadeIn slow" *ngIf="paisSelected">
     <div class="card animated fadeIn slow">
       <img class="card-img-top img-responsive animated fadeIn slow" [src]="paisSelected.bandera" alt="Card image cap">
       <div class="card-body">
@@ -30,7 +30,7 @@
       </div>
     </div>
   </div>
-  <div class="col-4 animated fadeIn slow" *ngIf="paisSelected && paisSelected.climaActual">
+  <div class="col-4 d-flex align-items-stretch animated fadeIn slow" *ngIf="paisSelected && paisSelected.climaActual">
     <div class="card animated fadeIn slow">
       <div class="card-body">
         <h4 class="card-title">Reporte del clima</h4>
@@ -77,7 +77,7 @@
   </div>
 
   <div class="col animated fadeIn slow" *ngIf="paisSelected && paisSelected.climaActual && date">
-    <div class="card animated fadeIn slow">
+    <div class="card  animated fadeIn slow">
       <div class="card-body">
         <h4 class="card-title">Hora</h4>
         <div class="d-flex align-items-center flex-row m-t-30">

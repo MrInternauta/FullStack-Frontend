@@ -16,16 +16,14 @@ const pageRute: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
       { path: 'profile', component: ProfileComponent, data: { titulo: 'Perfil de usuario' } },
-      { path: 'categoria', component: TasksComponent, data: { titulo: 'Tareas' } },
-      // {path: 'users', component: ParticipanteComponent, data: {titulo: 'Usuarios'}},
+      { path: 'tasks', component: TasksComponent, data: { titulo: 'Tareas' } },
+      {
+        path: '',
+        canActivate: [AdminGuardGuard],
+        children: [{ path: 'users', component: UsersComponent, data: { titulo: 'Usuarios' } }],
+      },
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     ],
-  },
-  {
-    path: '',
-    component: PagesComponent,
-    canActivate: [AdminGuardGuard],
-    children: [{ path: 'users', component: UsersComponent, data: { titulo: 'Usuarios' } }],
   },
 ];
 export const PAGES_ROUTES = RouterModule.forChild(pageRute);

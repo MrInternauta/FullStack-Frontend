@@ -3,6 +3,7 @@ export class Usuario {
     public name: string,
     public email: string,
     public password: string,
+    public lastName?: string,
     public id?: Id | null,
     public createdAt?: Date | null,
     public imageUrl?: string | null,

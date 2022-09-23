@@ -1,13 +1,13 @@
 <!-- Left Sidebar - style you can find in sidebar.scss  -->
 <!-- ============================================================== -->
-<aside class="left-sidebar">
+<aside class="left-sidebar" *ngIf="UsuarioSer.usuario">
     <!-- Sidebar scroll-->
     <div class="scroll-sidebar">
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav animated fadeIn">
             <ul id="sidebarnav">
                 <li class="user-profile">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img [src]="UsuarioSer.usuario.img | imagen" alt="user" /><span class="hide-menu">{{UsuarioSer.usuario.name}}  {{UsuarioSer.usuario.lastname}}</span></a>
+                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img *ngIf="UsuarioSer.usuario.imageUrl" [src]="UsuarioSer.usuario.imageUrl | imagen" alt="user" /><span class="hide-menu">{{UsuarioSer.usuario.name}}  {{UsuarioSer.usuario.lastName || ''}}</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a routerLinkActive="active" routerLink="/profile">Mi pefil </a></li>
                         <li><a (click)="UsuarioSer.Logout()" class="pointer">Cerrar sesion</a></li>
@@ -19,7 +19,7 @@
                     <a class="has-arrow waves-effect waves-dark" aria-expanded="false"><i [class]="menu.icono"></i><span class="hide-menu">Dashboard<span class="label label-rouded label-themecolor pull-right">4</span></span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a routerLinkActive="active" routerLink="/dashboard">Home</a></li>
-                        <li><a routerLinkActive="active" routerLink="/categoria">Tareas</a></li>
+                        <li><a routerLinkActive="active" routerLink="/tasks">Tareas</a></li>
                         <li><a routerLinkActive="active" routerLink="/users">Usuarios</a></li>
                     </ul>
                 </li>

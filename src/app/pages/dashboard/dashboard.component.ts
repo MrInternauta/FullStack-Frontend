@@ -5,6 +5,8 @@ import * as timez from 'countries-and-timezones';
 import * as moment from 'moment-timezone';
 import Swal from 'sweetalert2';
 
+import { environment } from '@advanced-front/environment';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -98,7 +100,7 @@ export class DashboardComponent implements OnInit {
   get_current_weather() {
     this.http
       .get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${this.paisSelected.nombre}&appid=6850ce2e80fa3d46b30d0ce3f8bf1a3e&lang=es&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?q=${this.paisSelected.nombre}&appid=${environment.apiKey}&lang=es&units=metric`
       )
       .subscribe((data: any) => {
         this.paisSelected.climaActual = data;
