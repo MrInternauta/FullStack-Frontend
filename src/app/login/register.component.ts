@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   UntypedFormControl,
@@ -9,20 +9,26 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 
+import { AppState, ComponentBase, isLoading, stopLoading } from '@advanced-front/core';
+import { Usuario } from '@advanced-front/core/models';
 import { UsuarioService } from '@advanced-front/services';
-import { Usuario } from '../core/models/usuario.model';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent extends ComponentBase implements OnInit, OnDestroy {
   forma!: UntypedFormGroup;
+  uiSubscription!: Subscription;
+  loading!: boolean;
 
-  constructor(public _UsuarioService: UsuarioService, public router: Router) {
+  constructor(public _UsuarioService: UsuarioService, public router: Router, private store: Store<AppState>) {
+    super();
     this.forma = new UntypedFormGroup(
       {
         name: new UntypedFormControl(null, [Validators.required, Validators.min(3), Validators.maxLength(45)]),
@@ -38,15 +44,19 @@ export class RegisterComponent implements OnInit {
       },
       { validators: this.passwordMatchingValidatior }
     );
+    this.uiSubscription = this.store.select('ui').subscribe(ui => {
+      this.loading = ui.isLoading;
+    });
   }
 
   ngOnInit() {}
 
+  ngOnDestroy(): void {
+    this.uiSubscription.unsubscribe();
+  }
   passwordMatchingValidatior: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const password = control.get('password');
     const confirmPassword = control.get('password2');
-    console.log(password, confirmPassword, this.forma);
-
     return password?.value === confirmPassword?.value ? null : { notmatched: true };
   };
 
@@ -70,16 +80,19 @@ export class RegisterComponent implements OnInit {
     if (!this.validInput(this.forma)) {
       return;
     }
+    this.store.dispatch(isLoading());
     let { name, email, password } = this.forma.value;
     const usuario = new Usuario(name, email, password);
-    console.log(usuario);
 
     this._UsuarioService.RegistrarUsuario(usuario).subscribe(
-      (resp: any) => {
+      () => {
+        this.store.dispatch(stopLoading());
         this.router.navigate(['/login']);
       },
       error => {
+        this.store.dispatch(stopLoading());
         console.log(error);
+        this._UsuarioService.Swal.fire(`Error al  registrar!`, `Campos incorrectos`, 'warning');
       }
     );
   }
