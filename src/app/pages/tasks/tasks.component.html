@@ -1,0 +1,43 @@
+<div class="row el-element-overlay animated fadeIn" *ngIf="tasks">
+  <div class="col animated fadeIn slow" ngfo>
+    <div class="card animated fadeIn slow">
+      <div class="card-body">
+        <h4 class="card-title">Tareas por hacer</h4>
+        <div class="mailbox">
+          <div
+            class="message-center contact-widget message-body position-relative ps-container ps-theme-default ps-active-y">
+            <ng-container *ngFor="let task of tasks">
+              <a href="javascript:void(0)" class="message-item d-flex align-items-center border-bottom p-3"
+                *ngIf="!task.done">
+                <div class="w-75 d-inline-block v-middle ps-3">
+                  <h5 class="message-title mb-0 mt-1">{{task.name}}</h5>
+                </div>
+              </a>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col animated fadeIn slow">
+    <div class="card animated fadeIn slow">
+      <div class="card-body">
+        <h4 class="card-title">Tareas terminadas</h4>
+        <div class="mailbox">
+          <div
+            class="message-center contact-widget message-body position-relative ps-container ps-theme-default ps-active-y">
+            <ng-container *ngFor="let task of tasks">
+              <a href="javascript:void(0)" class="message-item d-flex align-items-center border-bottom p-3"
+                *ngIf="task.done">
+                <div class="w-75 d-inline-block v-middle ps-3">
+                  <h5 class="message-title mb-0 mt-1">{{task.name}}</h5>
+                </div>
+              </a>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

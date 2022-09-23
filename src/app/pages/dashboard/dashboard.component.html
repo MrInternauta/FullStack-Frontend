@@ -1,0 +1,89 @@
+<div class="row el-element-overlay">
+  <div class="col h-100">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Paises disponibles</h4>
+        <div class="mailbox">
+          <div
+            class="message-center contact-widget message-body position-relative ps-container ps-theme-default ps-active-y">
+            <a href="javascript:void(0)" class="message-item d-flex align-items-center border-bottom p-3"
+              *ngFor="let pais of paises" (click)="select_country(pais)">
+              <span class="user-img position-relative d-inline-block"> <img [src]="pais.bandera" alt="user"
+                  class="w-100"> <span class=" rounded-circle online"></span>
+              </span>
+              <div class="w-75 d-inline-block v-middle ps-3">
+                <h5 class="message-title mb-0 mt-1">{{pais.nombre}}</h5>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-4 animated fadeIn slow" *ngIf="paisSelected">
+    <div class="card animated fadeIn slow">
+      <img class="card-img-top img-responsive animated fadeIn slow" [src]="paisSelected.bandera" alt="Card image cap">
+      <div class="card-body">
+        <h4 class="card-title">{{paisSelected.nombre}}</h4>
+        <p class="card-text">Pais seleccionado</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-4 animated fadeIn slow" *ngIf="paisSelected && paisSelected.climaActual">
+    <div class="card animated fadeIn slow">
+      <div class="card-body">
+        <h4 class="card-title">Reporte del clima</h4>
+        <div class="d-flex align-items-center flex-row m-t-30">
+          <div class="p-2 display-5 text-info"> <img
+              src="https://openweathermap.org/img/wn/{{paisSelected.climaActual.weather[0].icon}}@2x.png" alt="">
+            <span>{{paisSelected.climaActual.main.temp}}<sup>°</sup></span>
+          </div>
+          <div class="p-2">
+            <h3 class="m-b-0">Estado</h3><small>{{paisSelected.climaActual.weather[0].description}}</small>
+          </div>
+        </div>
+        <table class="table no-border">
+          <tbody>
+            <tr>
+              <td>Humedad</td>
+              <td class="font-medium">{{paisSelected.climaActual.main.humidity}}%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row el-element-overlay" *ngIf="paisSelected && paisSelected.timeZone">
+  <div class="col animated fadeIn slow" *ngIf="paisSelected && paisSelected.climaActual">
+    <div class="card animated fadeIn slow">
+      <div class="card-body">
+        <h4 class="card-title">Zonas horarias disponibles</h4>
+        <div class="mailbox" *ngIf="paisSelected.timeZone">
+          <div
+            class="message-center contact-widget message-body position-relative ps-container ps-theme-default ps-active-y">
+            <a href="javascript:void(0)" class="message-item d-flex align-items-center border-bottom p-3"
+              *ngFor="let timeZ of paisSelected.timeZone" (click)="select_TimeZone(timeZ)">
+              <div class="w-75 d-inline-block v-middle ps-3">
+                <h5 class="message-title mb-0 mt-1">{{timeZ.nameShort}}</h5>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col animated fadeIn slow" *ngIf="paisSelected && paisSelected.climaActual && date">
+    <div class="card animated fadeIn slow">
+      <div class="card-body">
+        <h4 class="card-title">Hora</h4>
+        <div class="d-flex align-items-center flex-row m-t-30">
+          <div class="p-2 display-5 text-info"> <span>{{date}}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

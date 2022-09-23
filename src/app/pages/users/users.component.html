@@ -1,0 +1,36 @@
+
+<div class="row el-element-overlay" *ngIf="users">
+  <div class="col animated fadeIn slow">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Lista de usuarios del sistema</h4>
+        <table class="tablesaw table-striped table-hover table-bordered table no-wrap tablesaw-columntoggle"
+          data-tablesaw-mode="columntoggle">
+          <thead>
+            <tr>
+              <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="persist" class="border">
+                Nombre</th>
+              <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-sortable-default-col=""
+                data-tablesaw-priority="3" class="border tablesaw-priority-3">Email</th>
+              <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="2"
+                class="border tablesaw-priority-2">Creación
+              </th>
+              <th scope="col" data-tablesaw-sortable-col="" data-tablesaw-priority="2"
+                class="border tablesaw-priority-2">Último inicio
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td class="title"><a class="link" href="javascript:void(0)">{{user.name}}</a></td>
+              <td class="tablesaw-priority-3">{{user.email}}</td>
+              <td class="tablesaw-priority-2">{{user.createdAt | date: 'dd/MM/yyyy'}}</td>
+              <td class="tablesaw-priority-1">{{(user.lastLogin | date: 'dd/MM/yyyy') || 'never'}}</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

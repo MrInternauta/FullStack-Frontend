@@ -1,0 +1,26 @@
+<div class="row animated fadeIn">
+
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Configuración</h4>
+                <h6 class="card-subtitle">Nombre</h6>
+                <form ngNativeValidate #f="ngForm" (ngSubmit)="Guardar( f.value )" class="form p-t-20">
+                    <div class="form-group">
+                        <label for="exampleInputuname">Nombre</label>
+                        <div class="input-group">
+                            <div class="input-group-addon"><i class="ti-user"></i></div>
+                            <input [ngModel]="usuario.name" name="nombre" type="text" class="form-control" i placeholder="Nombre" [value]="usuario.name"
+                            disabled required>
+                        </div>
+                    </div>
+
+                    <!-- <button type="submit" class="btn btn-success waves-effect waves-light m-r-10"><i class="fa fa-save"></i> Guardar</button> -->
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

@@ -1,0 +1,13 @@
+# compiled output
+/dist
+
+# dependencies
+/node_modules
+
+# IDE - VSCode
+.vscode/*
+
+# custom
+i18n-cache-busting.json
+.env
+src/@fuse/*
