@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
@@ -13,21 +20,21 @@ import { Usuario } from '../core/models/usuario.model';
   styleUrls: ['./login.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  forma!: FormGroup;
+  forma!: UntypedFormGroup;
 
   constructor(public _UsuarioService: UsuarioService, public router: Router) {
-    this.forma = new FormGroup(
+    this.forma = new UntypedFormGroup(
       {
-        name: new FormControl(null, [Validators.required, Validators.min(3), Validators.maxLength(45)]),
-        email: new FormControl(null, [
+        name: new UntypedFormControl(null, [Validators.required, Validators.min(3), Validators.maxLength(45)]),
+        email: new UntypedFormControl(null, [
           Validators.required,
           Validators.email,
           Validators.min(3),
           Validators.maxLength(45),
         ]),
-        password: new FormControl(null, [Validators.required, Validators.min(6), Validators.maxLength(45)]),
-        password2: new FormControl(null, [Validators.required, Validators.min(6), Validators.maxLength(45)]),
-        termino: new FormControl(false),
+        password: new UntypedFormControl(null, [Validators.required, Validators.min(6), Validators.maxLength(45)]),
+        password2: new UntypedFormControl(null, [Validators.required, Validators.min(6), Validators.maxLength(45)]),
+        termino: new UntypedFormControl(false),
       },
       { validators: this.passwordMatchingValidatior }
     );
@@ -43,7 +50,7 @@ export class RegisterComponent implements OnInit {
     return password?.value === confirmPassword?.value ? null : { notmatched: true };
   };
 
-  validInput(forma: FormGroup) {
+  validInput(forma: UntypedFormGroup) {
     if (forma.invalid) {
       return false;
     }
