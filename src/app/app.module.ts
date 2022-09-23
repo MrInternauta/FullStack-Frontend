@@ -13,11 +13,7 @@ import { PagesModule } from './pages/pages.module';
 import { ServiceModule } from './services/service.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    RegisterComponent,
-  ],
+  declarations: [AppComponent, LoginComponent, RegisterComponent],
   imports: [
     BrowserModule,
     APP_ROUTES,
@@ -25,8 +21,13 @@ import { ServiceModule } from './services/service.module';
     FormsModule,
     PagesModule,
     ServiceModule,
+    // StoreModule.forRoot(appReducers),
+    // StoreDevtoolsModule.instrument({
+    //   maxAge: 25,
+    //   logOnly: environment.production,
+    // }),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,5 +1,11 @@
-import { Todo } from './todo/models/todo.model';
+import { ActionReducerMap } from '@ngrx/store';
+
+import * as ui from './ui/ui.state';
 
 export interface AppState {
-  todos: Todo[];
+  ui: ui.State;
 }
+
+export const appReducers: ActionReducerMap<AppState> = {
+  ui: ui.uiReducer,
+};
