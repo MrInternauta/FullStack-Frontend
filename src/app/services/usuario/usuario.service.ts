@@ -6,7 +6,8 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
-import { API_PREFIX, AppState, setUser, unUser } from '@advanced-front/core';
+import { setUser, unUser } from '@advanced-front/auth/state/auth.actions';
+import { API_PREFIX, AppState } from '@advanced-front/core';
 import { environment } from '../../../environments/environment';
 import { Usuario } from '../../core/models/usuario.model';
 import { SubirarhivoService } from '../subirarchivo/subirarhivo.service';

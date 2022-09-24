@@ -13,10 +13,11 @@ import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
 
+import { IAuthState } from '@advanced-front/auth/state/auth.state';
 import { environment } from '@advanced-front/environment';
 import { API_PREFIX, IGNORE_ERROR } from '../constants';
 import { Token } from '../models';
-import { AppState, IAuthState } from '../state';
+import { AppState } from '../state';
 import { StatusCodes } from '../util';
 
 @Injectable()

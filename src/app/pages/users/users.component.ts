@@ -20,6 +20,14 @@ export class UsersComponent implements OnInit, OnDestroy {
   public data$!: Observable<Usuario[] | null>;
   constructor(public _users: UsersService, private store: Store<UsersState>) {
     this.getData();
+    this.store
+      .select('users')
+      .pipe(take(1))
+      .subscribe(item => {
+        if (!item) {
+          this.getData();
+        }
+      });
   }
 
   ngOnInit() {}
@@ -27,16 +35,21 @@ export class UsersComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {}
 
   getData() {
-    this.data$ = this._users.getUsers().pipe(take(1));
-    this.data$.toPromise().then((users: Usuario[] | null) => {
-      if (users) {
-        this.store.dispatch(
-          setUsers({
-            users,
-          })
-        );
-        this.data = users;
-      }
-    });
+    this._users
+      .getUsers()
+      .pipe(take(1))
+      .toPromise()
+      .then((users: Usuario[] | null) => {
+        if (users) {
+          console.log('service');
+
+          this.store.dispatch(
+            setUsers({
+              users,
+            })
+          );
+          this.data = users;
+        }
+      });
   }
 }
