@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import Swal from 'sweetalert2';
 
-import { Task } from '@advanced-front/core';
+import { API_PREFIX, Task } from '@advanced-front/core';
 import { environment } from '@advanced-front/environment';
 import { UsuarioService } from '@advanced-front/services';
 
@@ -18,13 +18,15 @@ export class TasksComponent implements OnInit {
     const headers = {
       Authorization: 'Bearer ' + this._usuario.token,
     };
-    this._usuario.http.get(environment.url + 'tasks/byUserId?id=' + this._usuario.usuario.id, { headers }).subscribe(
-      (data: Task[] | any) => {
-        this.tasks = data;
-      },
-      (e: any) => {
-        console.log(e);
-      }
-    );
+    this._usuario.http
+      .get(environment.url + API_PREFIX + 'tasks/byUserId?id=' + this._usuario.usuario.id, { headers })
+      .subscribe(
+        (data: Task[] | any) => {
+          this.tasks = data;
+        },
+        (e: any) => {
+          console.log(e);
+        }
+      );
   }
 }

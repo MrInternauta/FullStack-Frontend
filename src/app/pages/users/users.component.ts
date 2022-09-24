@@ -1,32 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 import { Usuario } from '@advanced-front/core/models/usuario.model';
-import { UsuarioService } from '@advanced-front/services';
-import { environment } from '../../../environments/environment';
+import { UsersService } from './services/users.service';
+import { setUsers } from './state/users.actions';
+import { UsersState } from './state/users.state';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css'],
 })
-export class UsersComponent implements OnInit {
-  public users!: Usuario[];
-  constructor(public _usuario: UsuarioService) {}
+export class UsersComponent implements OnInit, OnDestroy {
+  public data!: Usuario[];
+  public data$!: Observable<Usuario[] | null>;
+  constructor(public _users: UsersService, private store: Store<UsersState>) {
+    this.getData();
+  }
 
-  ngOnInit() {
-    const headers = {
-      Authorization: 'Bearer ' + this._usuario.token,
-    };
-    this._usuario.http.get(environment.url + 'users/', { headers }).subscribe(
-      (data: Usuario[] | any) => {
-        this.users = data;
-        console.log(data);
-      },
-      (e: any) => {
-        console.log(e);
+  ngOnInit() {}
+
+  ngOnDestroy(): void {}
+
+  getData() {
+    this.data$ = this._users.getUsers().pipe(take(1));
+    this.data$.toPromise().then((users: Usuario[] | null) => {
+      if (users) {
+        this.store.dispatch(
+          setUsers({
+            users,
+          })
+        );
+        this.data = users;
       }
-    );
+    });
   }
 }

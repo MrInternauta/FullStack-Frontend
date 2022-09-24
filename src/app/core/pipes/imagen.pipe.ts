@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 import { environment } from '../../../environments/environment';
 import { UsuarioService } from '../../services/usuario/usuario.service';
+import { API_PREFIX } from '../constants';
 
 @Pipe({
   name: 'imagen',
@@ -11,7 +12,7 @@ export class ImagenPipe implements PipeTransform {
 
   transform(img: string, tipo: string = 'usuario'): any {
     // {{url}}/imagen/usuarios/5c1ed49dc6064320e4c59615-198.jpg?token={{token}}
-    let url = environment.url + '/imagen/';
+    let url = environment.url + API_PREFIX + 'imagen/';
     if (!img) {
       return 'https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png';
     }

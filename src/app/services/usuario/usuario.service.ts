@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
-import { AppState, setUser, unUser } from '@advanced-front/core';
+import { API_PREFIX, AppState, setUser, unUser } from '@advanced-front/core';
 import { environment } from '../../../environments/environment';
 import { Usuario } from '../../core/models/usuario.model';
 import { SubirarhivoService } from '../subirarchivo/subirarhivo.service';
@@ -26,7 +26,7 @@ export class UsuarioService {
     private store: Store<AppState>
   ) {
     this.CargarStorage();
-    console.log(environment.url);
+    console.log(environment.url + API_PREFIX);
   }
 
   /**
@@ -113,7 +113,7 @@ export class UsuarioService {
       localStorage.removeItem('email');
     }
     return this.http
-      .post(environment.url + 'users/auth', {
+      .post(environment.url + API_PREFIX + 'users/auth', {
         email: usuario.email,
         password: usuario.password,
       })
@@ -132,7 +132,7 @@ export class UsuarioService {
   RegistrarUsuario(usuario: Usuario) {
     usuario.createdAt = new Date();
     usuario.idRol = 2;
-    return this.http.post(environment.url + 'users/registerAccount', usuario).pipe(
+    return this.http.post(environment.url + API_PREFIX + 'users/registerAccount', usuario).pipe(
       map(
         (data: any) => {
           Swal.fire(`Usuario creado!`, `${data.name} creado correctamente!`, 'success');
@@ -156,7 +156,7 @@ export class UsuarioService {
     }
     return this.http
       .put(
-        environment.url + 'users/' + this.usuario.id,
+        environment.url + API_PREFIX + 'users/' + this.usuario.id,
         {
           ...this.usuario,
           name: usuario.name.slice(0, 99),

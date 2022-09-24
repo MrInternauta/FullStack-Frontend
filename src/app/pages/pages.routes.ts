@@ -6,7 +6,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PagesComponent } from './pages.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TasksComponent } from './tasks/tasks.component';
-import { UsersComponent } from './users/users.component';
 
 const pageRute: Routes = [
   {
@@ -20,7 +19,13 @@ const pageRute: Routes = [
       {
         path: '',
         canActivate: [AdminGuardGuard],
-        children: [{ path: 'users', component: UsersComponent, data: { titulo: 'Usuarios' } }],
+        children: [
+          {
+            path: 'users',
+            loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
+            data: { titulo: 'Usuarios' },
+          },
+        ],
       },
       { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     ],
