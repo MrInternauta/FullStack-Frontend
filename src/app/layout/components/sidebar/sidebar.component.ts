@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UsuarioService } from '@advanced-front/auth/services';
+import { AuthService } from '@advanced-front/auth/services';
 import { SidebarService } from '@advanced-front/layout/services/sidebar.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { SidebarService } from '@advanced-front/layout/services/sidebar.service'
   styles: [],
 })
 export class SidebarComponent implements OnInit {
-  constructor(public _sidebar: SidebarService, public UsuarioSer: UsuarioService) {}
+  constructor(public _sidebar: SidebarService, public UsuarioSer: AuthService) {}
 
   ngOnInit() {}
 }

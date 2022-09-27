@@ -3,23 +3,36 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
-import { API_PREFIX, AppState, Usuario } from '@advanced-front/core';
-import { environment } from '@advanced-front/environment';
-import { setUser, unUser } from '../state';
+import { setUser, unUser } from '@advanced-front/auth/state/auth.actions';
+import { AppState } from '@advanced-front/core';
+import { Usuario } from '../../core/models/usuario.model';
+import { IAuthState } from '../state';
+
+const API_URL = `/api/users/`;
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  usuario!: any;
-  token!: string;
+  _auth!: IAuthState;
   public Swal = Swal;
 
   constructor(public http: HttpClient, public router: Router, private store: Store<AppState>) {
-    this.CargarStorage();
+    this.loadStorage();
+    this.store.select('userSesion').subscribe(auth => {
+      this._auth = auth;
+    });
+  }
+
+  get usuario() {
+    return this._auth.user;
+  }
+
+  get token() {
+    return this._auth.token;
   }
 
   /**
@@ -64,70 +77,60 @@ export class AuthService {
     return re.test(email);
   }
 
-  CargarStorage() {
-    if (localStorage.getItem('token')) {
-      this.token = localStorage.getItem('token') || '';
-      this.usuario = JSON.parse(localStorage.getItem('usuario') || '');
-      if (!this.usuario) {
+  loadStorage() {
+    let localStorageAuth = {
+      token: localStorage.getItem('token'),
+      user: localStorage.getItem('usuario'),
+    };
+
+    if (localStorageAuth.user && localStorageAuth.token) {
+      // this.token = localStorageAuth.token;
+      const user: Usuario = JSON.parse(localStorageAuth.user);
+      if (!user) {
         return;
       }
-      this.store.dispatch(setUser({ user: this.usuario, id: this.usuario.id || '', token: this.token }));
-    } else {
-      this.token = '';
-      this.usuario = null;
+      this.store.dispatch(setUser({ user, id: user.id || '', token: localStorageAuth.token }));
     }
   }
 
   GuardarStorage(id: string, token: string, usuario: Usuario) {
-    this.store.dispatch(setUser({ user: usuario, id, token }));
     localStorage.setItem('id', id);
     localStorage.setItem('token', token);
     localStorage.setItem('usuario', JSON.stringify(usuario));
-    this.usuario = usuario;
-    this.token = token;
+    this.store.dispatch(setUser({ user: usuario, id, token }));
+
+    // this.usuario = usuario;
+    // this.token = token;
   }
 
-  EstaLogueado() {
-    return this.token.length > 5 ? true : false;
-  }
-  Logout() {
-    this.usuario = null;
-    this.token = '';
-    localStorage.removeItem('token');
-    localStorage.removeItem('usuario');
-    localStorage.removeItem('id');
-    this.store.dispatch(unUser());
-    location.reload();
-  }
   Login(usuario: Usuario, recordar = false) {
     if (recordar) {
       localStorage.setItem('email', usuario.email);
     } else {
       localStorage.removeItem('email');
     }
-    return this.http
-      .post(environment.url + API_PREFIX + 'users/auth', {
-        email: usuario.email,
-        password: usuario.password,
+    return this.Auth(usuario.email, usuario.password).pipe(
+      map((resp: any) => {
+        if (resp && resp.jwt && resp.user) {
+          this.GuardarStorage(resp.user.id, resp.jwt, resp.user);
+          return true;
+        }
+        Swal.fire(`Error al  iniciar sesión!`, `Correo electrónico ó contraseña incorrecto`, 'warning');
+        return false;
       })
-      .pipe(
-        map((resp: any) => {
-          if (resp && resp.jwt && resp.user) {
-            this.GuardarStorage(resp.user.id, resp.jwt, resp.user);
-            return true;
-          }
-          Swal.fire(`Error al  iniciar sesión!`, `Correo electrónico ó contraseña incorrecto`, 'warning');
-          return false;
-        })
-      );
+    );
   }
 
   RegistrarUsuario(usuario: Usuario) {
     usuario.createdAt = new Date();
     usuario.idRol = 2;
-    return this.http.post(environment.url + API_PREFIX + 'users/registerAccount', usuario).pipe(
+    return this.Register(usuario).pipe(
       map(
         (data: any) => {
+          if (!data || !data.name) {
+            throw new Error('Error al crear!');
+          }
+
           Swal.fire(`Usuario creado!`, `${data.name} creado correctamente!`, 'success');
           return data;
         },
@@ -139,37 +142,28 @@ export class AuthService {
     );
   }
 
-  ActualizarUsuario(usuario: Usuario) {
-    const headers = {
-      Authorization: 'Bearer ' + this.token,
-    };
-    console.log(headers, usuario);
-    if (!this.usuario) {
-      return;
-    }
-    return this.http
-      .put(
-        environment.url + API_PREFIX + 'users/' + this.usuario.id,
-        {
-          ...this.usuario,
-          name: usuario.name.slice(0, 99),
-        },
-        {
-          headers,
-        }
-      )
-      .pipe(
-        map((data: any) => {
-          console.log(data);
+  Auth(email: string, password: string) {
+    return this.http.post(`${API_URL}auth`, { email, password });
+  }
 
-          if (!data.id) {
-            Swal.fire(`Error al actualizar!`, ``, 'warning');
-            return;
-          }
-          Swal.fire(`Usuario actualizado!`, ``, 'success');
-          this.GuardarStorage(data.id, this.token, data);
-          return true;
-        })
-      );
+  Register(usuario: Usuario) {
+    return this.http.post(`${API_URL}registerAccount`, usuario);
+  }
+
+  async HaveSession() {
+    let session = await this.store.select('userSesion').pipe(take(1)).toPromise();
+    return session.id != null && session.token != null && session.user != null;
+  }
+
+  Logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('id');
+
+    // this.usuario = null;
+    // this.token = '';
+
+    this.store.dispatch(unUser());
+    location.reload();
   }
 }

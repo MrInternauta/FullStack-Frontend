@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UsuarioService } from '@advanced-front/auth/services';
+import { AuthService } from '@advanced-front/auth/services';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +8,7 @@ import { UsuarioService } from '@advanced-front/auth/services';
   styles: [],
 })
 export class HeaderComponent implements OnInit {
-  constructor(public UsuarioSer: UsuarioService) {}
+  constructor(public UsuarioSer: AuthService) {}
 
   ngOnInit() {}
 }

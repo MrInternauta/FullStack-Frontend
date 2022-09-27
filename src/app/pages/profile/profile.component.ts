@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import Swal from 'sweetalert2';
 
-import { UsuarioService } from '@advanced-front/auth/services';
+import { AuthService } from '@advanced-front/auth/services';
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +13,7 @@ export class ProfileComponent implements OnInit {
   usuario: any;
   imagenTemp: any;
   ImagenSubir!: File;
-  constructor(public _usuario: UsuarioService) {}
+  constructor(public _usuario: AuthService) {}
 
   ngOnInit() {
     this.usuario = this._usuario.usuario;

@@ -16,7 +16,7 @@ import Swal from 'sweetalert2';
 import { AppState, ComponentBase } from '@advanced-front/core';
 import { Usuario } from '@advanced-front/core/models';
 import { isLoading, stopLoading } from '@advanced-front/layout/state';
-import { UsuarioService } from './services';
+import { AuthService } from './services';
 
 @Component({
   selector: 'app-register',
@@ -28,7 +28,7 @@ export class RegisterComponent extends ComponentBase implements OnInit, OnDestro
   uiSubscription!: Subscription;
   loading!: boolean;
 
-  constructor(public _UsuarioService: UsuarioService, public router: Router, private store: Store<AppState>) {
+  constructor(public _UsuarioService: AuthService, public router: Router, private store: Store<AppState>) {
     super();
     this.forma = new UntypedFormGroup(
       {

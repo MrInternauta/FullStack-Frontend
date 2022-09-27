@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 
 import { AppState, ComponentBase, Usuario } from '@advanced-front/core';
 import { isLoading, stopLoading } from '@advanced-front/layout/state';
-import { UsuarioService } from './services';
+import { AuthService } from './services';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +20,7 @@ export class LoginComponent extends ComponentBase implements OnInit, OnDestroy {
   auth2: any;
   loading!: boolean;
   uiSubscription!: Subscription;
-  constructor(public _UsuarioService: UsuarioService, public router: Router, private store: Store<AppState>) {
+  constructor(public _UsuarioService: AuthService, public router: Router, private store: Store<AppState>) {
     super();
     this.email = localStorage.getItem('email') || '';
     if (this.email.length > 3) {

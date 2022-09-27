@@ -4,8 +4,6 @@ import { NgModule } from '@angular/core';
 // import { ChartsModule } from 'ng2-charts';
 import { FormsModule } from '@angular/forms';
 
-
-
 import { PipesModule } from '../core/pipes/pipes.module';
 import { SharedModule } from '../layout/shared.module';
 import { DashboardComponent } from './dashboard/dashboard.component';

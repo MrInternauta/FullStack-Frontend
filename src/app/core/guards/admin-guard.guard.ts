@@ -3,17 +3,17 @@ import { CanActivate, Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
 
-import { UsuarioService } from '../../auth/services/usuario.service';
+import { AuthService } from '../../auth/services/auth.service';
 import { UsuarioRoles } from '../models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminGuardGuard implements CanActivate {
-  constructor(public _UsuarioService: UsuarioService, public router: Router) {}
-  canActivate() {
+  constructor(public _UsuarioService: AuthService, public router: Router) {}
+  async canActivate() {
     if (
-      this._UsuarioService.EstaLogueado() &&
+      (await this._UsuarioService.HaveSession()) &&
       this._UsuarioService.usuario &&
       this._UsuarioService.usuario.idRol === UsuarioRoles.ADMIN
     ) {

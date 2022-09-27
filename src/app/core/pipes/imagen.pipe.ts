@@ -1,18 +1,17 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { UsuarioService } from '@advanced-front/auth/services';
-import { environment } from '../../../environments/environment';
+import { AuthService } from '@advanced-front/auth/services';
 import { API_PREFIX } from '../constants';
 
 @Pipe({
   name: 'imagen',
 })
 export class ImagenPipe implements PipeTransform {
-  constructor(private _Usuario: UsuarioService) {}
+  constructor(private _Usuario: AuthService) {}
 
   transform(img: string, tipo: string = 'usuario'): any {
     // {{url}}/imagen/usuarios/5c1ed49dc6064320e4c59615-198.jpg?token={{token}}
-    let url = environment.url + API_PREFIX + 'imagen/';
+    let url = API_PREFIX + 'imagen/';
     if (!img) {
       return 'https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png';
     }

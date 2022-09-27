@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { UsuarioRoles } from '@advanced-front/core';
-import { UsuarioService } from '../../auth/services/usuario.service';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class SidebarService {
     },
   ];
 
-  constructor(private _user: UsuarioService) {
+  constructor(private _user: AuthService) {
     if (this._user && this._user.usuario && this._user.usuario.idRol == UsuarioRoles.ADMIN) {
       this.menu = [
         {

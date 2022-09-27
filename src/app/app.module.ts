@@ -14,7 +14,6 @@ import { PagesModule } from './pages/pages.module';
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, APP_ROUTES, CoreModule, PagesModule, AuthModule],
-  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
