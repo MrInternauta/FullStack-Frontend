@@ -3,11 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 
-import { StoreModule } from '@ngrx/store';
+
 
 import { PipesModule } from '@advanced-front/core/pipes/pipes.module';
 import { SharedModule } from '@advanced-front/layout/shared.module';
-import { usersFeatureKey, usersReducer } from './state/users.state';
 import { UsersComponent } from './users.component';
 
 const userRouter: Routes = [
@@ -27,7 +26,7 @@ const userRouter: Routes = [
     FormsModule,
     CommonModule,
     PipesModule,
-    StoreModule.forFeature(usersFeatureKey, usersReducer),
+    // StoreModule.forFeature(usersFeatureKey, usersReducer),
   ],
 })
 export class UsersModule {}

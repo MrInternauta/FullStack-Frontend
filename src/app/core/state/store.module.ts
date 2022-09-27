@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { environment } from '@advanced-front/environment';
 import { appReducers } from './app.reducer';
 
 @NgModule({
@@ -14,7 +13,7 @@ import { appReducers } from './app.reducer';
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
-      logOnly: !environment.production,
+      logOnly: true,
     }),
   ],
 })

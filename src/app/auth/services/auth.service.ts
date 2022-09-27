@@ -11,7 +11,8 @@ import { AppState } from '@advanced-front/core';
 import { Usuario } from '../../core/models/usuario.model';
 import { IAuthState } from '../state';
 
-const API_URL = `/api/users/`;
+// const API_URL = `${API_PREFIX}users/`;
+const API_URL = `api/users/`;
 
 @Injectable({
   providedIn: 'root',

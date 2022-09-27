@@ -8,12 +8,12 @@ export interface UsersState {
   [usersFeatureKey]: Usuario[] | null;
 }
 
-const initialState: UsersState = {
+export const userInitialState: UsersState = {
   [usersFeatureKey]: null,
 };
 
 const _usersReducer = createReducer(
-  initialState,
+  userInitialState,
   on(setUsers, (state, { users }) => ({ ...state, [usersFeatureKey]: users })),
   on(removeUsers, state => ({ ...state, [usersFeatureKey]: null }))
 );

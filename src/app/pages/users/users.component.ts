@@ -1,14 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
+import { AppState } from '@advanced-front/core';
 import { Usuario } from '@advanced-front/core/models/usuario.model';
 import { UsersService } from './services/users.service';
 import { setUsers } from './state/users.actions';
-import { UsersState } from './state/users.state';
 
 @Component({
   selector: 'app-users',
@@ -17,15 +16,17 @@ import { UsersState } from './state/users.state';
 })
 export class UsersComponent implements OnInit, OnDestroy {
   public data!: Usuario[];
-  public data$!: Observable<Usuario[] | null>;
-  constructor(public _users: UsersService, private store: Store<UsersState>) {
-    this.getData();
+  constructor(public _users: UsersService, private store: Store<AppState>) {
     this.store
       .select('users')
+      .pipe()
       .pipe(take(1))
-      .subscribe(item => {
-        if (!item) {
+      .toPromise()
+      .then((store: { users: any }) => {
+        if (store.users == null) {
           this.getData();
+        } else {
+          this.data = store.users;
         }
       });
   }
@@ -34,22 +35,22 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
+  trackItems(index: number, user: Usuario): string {
+    return user.email;
+  }
+
   getData() {
     this._users
       .getUsers()
       .pipe(take(1))
       .toPromise()
-      .then((users: Usuario[] | null) => {
-        if (users) {
-          console.log('service');
-
-          this.store.dispatch(
-            setUsers({
-              users,
-            })
-          );
-          this.data = users;
-        }
+      .then((users: Usuario[]) => {
+        this.store.dispatch(
+          setUsers({
+            users,
+          })
+        );
+        this.data = users;
       });
   }
 }

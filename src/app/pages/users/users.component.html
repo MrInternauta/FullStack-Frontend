@@ -1,5 +1,5 @@
 
-<div class="row el-element-overlay " *ngIf="data">
+<div class="row el-element-overlay ">
   <div class="col animated fadeIn slow">
     <div class="card">
       <div class="card-body">
@@ -21,13 +21,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let user of data">
+            <tr *ngFor="let user of data; trackBy: trackItems">
               <td class="title"><a class="link" href="javascript:void(0)">{{user.name}}</a></td>
               <td class="tablesaw-priority-3">{{user.email}}</td>
               <td class="tablesaw-priority-2">{{user.createdAt | date: 'dd/MM/yyyy'}}</td>
               <td class="tablesaw-priority-1">{{(user.lastLogin | date: 'dd/MM/yyyy') || 'never'}}</td>
             </tr>
-
           </tbody>
         </table>
       </div>
