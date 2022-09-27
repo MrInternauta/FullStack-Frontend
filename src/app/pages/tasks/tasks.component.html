@@ -1,4 +1,4 @@
-<div class="row el-element-overlay animated fadeIn" *ngIf="tasks">
+<div class="row el-element-overlay animated fadeIn">
   <div class="col animated fadeIn slow" ngfo>
     <div class="card animated fadeIn slow">
       <div class="card-body">
@@ -6,7 +6,7 @@
         <div class="mailbox">
           <div
             class="message-center contact-widget message-body position-relative ps-container ps-theme-default ps-active-y">
-            <ng-container *ngFor="let task of tasks">
+            <ng-container *ngFor="let task of data">
               <a href="javascript:void(0)" class="message-item d-flex align-items-center border-bottom p-3"
                 *ngIf="!task.done">
                 <div class="w-75 d-inline-block v-middle ps-3">
@@ -27,7 +27,7 @@
         <div class="mailbox">
           <div
             class="message-center contact-widget message-body position-relative ps-container ps-theme-default ps-active-y">
-            <ng-container *ngFor="let task of tasks">
+            <ng-container *ngFor="let task of data">
               <a href="javascript:void(0)" class="message-item d-flex align-items-center border-bottom p-3"
                 *ngIf="task.done">
                 <div class="w-75 d-inline-block v-middle ps-3">

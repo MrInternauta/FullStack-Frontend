@@ -1,6 +1,6 @@
 import { Id } from './usuario.model';
 
-export class Task {
+export class ITask {
   constructor(
     public name: string,
     public description: string,

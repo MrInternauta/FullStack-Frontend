@@ -10,7 +10,6 @@ export class ImagenPipe implements PipeTransform {
   constructor(private _Usuario: AuthService) {}
 
   transform(img: string, tipo: string = 'usuario'): any {
-    // {{url}}/imagen/usuarios/5c1ed49dc6064320e4c59615-198.jpg?token={{token}}
     let url = API_PREFIX + 'imagen/';
     if (!img) {
       return 'https://www.freeiconspng.com/thumbs/profile-icon-png/profile-icon-9.png';

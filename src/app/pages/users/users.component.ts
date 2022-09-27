@@ -8,6 +8,7 @@ import { AppState } from '@advanced-front/core';
 import { Usuario } from '@advanced-front/core/models/usuario.model';
 import { UsersService } from './services/users.service';
 import { setUsers } from './state/users.actions';
+import { UsersState } from './state/users.state';
 
 @Component({
   selector: 'app-users',
@@ -22,7 +23,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       .pipe()
       .pipe(take(1))
       .toPromise()
-      .then((store: { users: any }) => {
+      .then((store: UsersState) => {
         if (store.users == null) {
           this.getData();
         } else {
