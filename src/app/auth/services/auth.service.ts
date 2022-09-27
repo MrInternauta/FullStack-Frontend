@@ -6,28 +6,20 @@ import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
-import { setUser, unUser } from '@advanced-front/auth/state/auth.actions';
-import { API_PREFIX, AppState } from '@advanced-front/core';
-import { environment } from '../../../environments/environment';
-import { Usuario } from '../../core/models/usuario.model';
-import { SubirarhivoService } from '../subirarchivo/subirarhivo.service';
+import { API_PREFIX, AppState, Usuario } from '@advanced-front/core';
+import { environment } from '@advanced-front/environment';
+import { setUser, unUser } from '../state';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UsuarioService {
+export class AuthService {
   usuario!: any;
   token!: string;
   public Swal = Swal;
 
-  constructor(
-    public http: HttpClient,
-    public router: Router,
-    public subirarchivo: SubirarhivoService,
-    private store: Store<AppState>
-  ) {
+  constructor(public http: HttpClient, public router: Router, private store: Store<AppState>) {
     this.CargarStorage();
-    console.log(environment.url + API_PREFIX);
   }
 
   /**

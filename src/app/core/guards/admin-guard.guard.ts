@@ -3,7 +3,7 @@ import { CanActivate, Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
 
-import { UsuarioService } from '../../services/usuario/usuario.service';
+import { UsuarioService } from '../../auth/services/usuario.service';
 import { UsuarioRoles } from '../models';
 
 @Injectable({

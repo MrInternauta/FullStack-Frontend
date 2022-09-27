@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import Swal from 'sweetalert2';
 
-import { UsuarioService } from '../../services/usuario/usuario.service';
+import { UsuarioService } from '@advanced-front/auth/services';
 
 @Component({
   selector: 'app-profile',

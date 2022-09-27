@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { UsuarioRoles } from '@advanced-front/core';
-import { UsuarioService } from '../usuario/usuario.service';
+import { UsuarioService } from '../../auth/services/usuario.service';
 
 @Injectable({
   providedIn: 'root',

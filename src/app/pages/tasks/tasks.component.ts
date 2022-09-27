@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import Swal from 'sweetalert2';
 
+import { UsuarioService } from '@advanced-front/auth/services';
 import { API_PREFIX, Task } from '@advanced-front/core';
 import { environment } from '@advanced-front/environment';
-import { UsuarioService } from '@advanced-front/services';
 
 @Component({
   selector: 'app-tasks',

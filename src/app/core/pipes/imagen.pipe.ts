@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
+import { UsuarioService } from '@advanced-front/auth/services';
 import { environment } from '../../../environments/environment';
-import { UsuarioService } from '../../services/usuario/usuario.service';
 import { API_PREFIX } from '../constants';
 
 @Pipe({

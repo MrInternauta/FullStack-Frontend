@@ -8,12 +8,12 @@ import { AuthModule } from './auth/auth.module';
 import { CoreModule } from './core/core.module';
 // Modulos
 import { PagesModule } from './pages/pages.module';
+
 // Servicios
-import { ServiceModule } from './services/service.module';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, APP_ROUTES, CoreModule, PagesModule, ServiceModule, AuthModule],
+  imports: [BrowserModule, APP_ROUTES, CoreModule, PagesModule, AuthModule],
   providers: [],
   bootstrap: [AppComponent],
 })

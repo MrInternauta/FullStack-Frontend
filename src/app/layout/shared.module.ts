@@ -3,10 +3,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { PipesModule } from '../core/pipes/pipes.module';
-import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
-import { HeaderComponent } from './header/header.component';
-import { NopagefoundComponent } from './nopagefound/nopagefound.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { HeaderComponent, NopagefoundComponent, SidebarComponent } from './components';
+import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 
 @NgModule({
   declarations: [HeaderComponent, SidebarComponent, BreadcrumbsComponent, NopagefoundComponent],

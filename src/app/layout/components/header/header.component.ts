@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UsuarioService } from '@advanced-front/services';
+import { UsuarioService } from '@advanced-front/auth/services';
 
 @Component({
   selector: 'app-header',

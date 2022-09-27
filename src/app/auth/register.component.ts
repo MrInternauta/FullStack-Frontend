@@ -13,9 +13,10 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 
-import { AppState, ComponentBase, isLoading, stopLoading } from '@advanced-front/core';
+import { AppState, ComponentBase } from '@advanced-front/core';
 import { Usuario } from '@advanced-front/core/models';
-import { UsuarioService } from '@advanced-front/services';
+import { isLoading, stopLoading } from '@advanced-front/layout/state';
+import { UsuarioService } from './services';
 
 @Component({
   selector: 'app-register',

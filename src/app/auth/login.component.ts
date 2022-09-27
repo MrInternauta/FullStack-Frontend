@@ -5,8 +5,9 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
-import { AppState, ComponentBase, isLoading, stopLoading, Usuario } from '@advanced-front/core';
-import { UsuarioService } from '@advanced-front/services';
+import { AppState, ComponentBase, Usuario } from '@advanced-front/core';
+import { isLoading, stopLoading } from '@advanced-front/layout/state';
+import { UsuarioService } from './services';
 
 @Component({
   selector: 'app-login',
