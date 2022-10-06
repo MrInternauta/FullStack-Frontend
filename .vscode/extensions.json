@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "angular.ng-template",
+        "mikehanson.auto-barrel",
+        "mike-co.import-sorter",
+        "mikael.angular-beastcode",
+        "esbenp.prettier-vscode"
+    ]
+}

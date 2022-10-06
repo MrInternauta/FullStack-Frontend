@@ -1,0 +1,5 @@
+{
+  "autoBarrel.ignoreFilePathContainingAnyOf": ".spec,.test,index.ts",
+  "autoBarrel.disableRecursiveBarrelling": true,
+  "autoBarrel.defaultLanguage": "TypeScript",
+}
