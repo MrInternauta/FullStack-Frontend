@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 
 import { Usuario } from '@advanced-front/core';
-import { removeUsers, setUsers } from './users.actions';
+import { removeUsers, loadedUsers } from './users.actions';
 
 export const usersFeatureKey = 'users';
 export interface UsersState {
@@ -14,7 +14,7 @@ export const userInitialState: UsersState = {
 
 const _usersReducer = createReducer(
   userInitialState,
-  on(setUsers, (state, { users }) => ({ ...state, [usersFeatureKey]: users })),
+  on(loadedUsers, (state, { users }) => ({ ...state, [usersFeatureKey]: users })),
   on(removeUsers, state => ({ ...state, [usersFeatureKey]: null }))
 );
 

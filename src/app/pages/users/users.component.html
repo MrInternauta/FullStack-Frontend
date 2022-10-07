@@ -20,7 +20,7 @@
               </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngIf="data$ | async as data; else loadingData">
             <tr *ngFor="let user of data; trackBy: trackItems">
               <td class="title"><a class="link" href="javascript:void(0)">{{user.name}}</a></td>
               <td class="tablesaw-priority-3">{{user.email}}</td>
@@ -28,6 +28,12 @@
               <td class="tablesaw-priority-1">{{(user.lastLogin | date: 'dd/MM/yyyy') || 'never'}}</td>
             </tr>
           </tbody>
+          <ng-template #loadingData>
+            <tbody>
+              <h3>Loading data</h3>
+            </tbody>
+          </ng-template>
+          
         </table>
       </div>
     </div>

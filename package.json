@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^14.2.3",
     "@angular/platform-browser-dynamic": "^14.2.3",
     "@angular/router": "^14.2.3",
+    "@ngrx/effects": "^14.3.2",
     "@ngrx/store": "^14.3.1",
     "@ngrx/store-devtools": "^14.3.1",
     "@types/countries-and-timezones": "^2.0.3",
